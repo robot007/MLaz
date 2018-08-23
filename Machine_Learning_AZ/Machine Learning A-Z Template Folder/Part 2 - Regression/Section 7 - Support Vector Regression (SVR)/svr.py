@@ -19,22 +19,31 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, rando
 from sklearn.preprocessing import StandardScaler
 sc_X = StandardScaler()
 sc_y = StandardScaler()
-X = sc_X.fit_transform(X)
-y = sc_y.fit_transform(y.reshape(-1,1))
+X2 = sc_X.fit_transform(X)
+y2 = sc_y.fit_transform(y.reshape(-1,1))
 
 # Fitting SVR to the dataset
 from sklearn.svm import SVR
 regressor = SVR(kernel = 'rbf')
 regressor.fit(X, y)
 
-# Predicting a new result
-y_pred = regressor.predict(6.5)
-y_pred = sc_y.inverse_transform(y_pred)
+regressor2=SVR(kernel='rbf')
+regressor2.fit(X2,y2)
+
 
 # Visualising the SVR results
 plt.scatter(X, y, color = 'red')
 plt.plot(X, regressor.predict(X), color = 'blue')
-plt.title('Truth or Bluff (SVR)')
+plt.title('SVR without scalaring')
+plt.xlabel('Position level')
+plt.ylabel('Salary')
+plt.show()
+
+
+# Visualising the SVR results
+plt.scatter(X2, y2, 'r')
+plt.plot(X2, regressor.predict(X2), color = 'blue')
+plt.title('SVR with scalaring')
 plt.xlabel('Position level')
 plt.ylabel('Salary')
 plt.show()
